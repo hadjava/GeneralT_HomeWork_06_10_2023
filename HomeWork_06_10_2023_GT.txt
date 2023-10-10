@@ -1,0 +1,42 @@
+/*
+1.Вывести job_id тех сотрудников, которые зарабатывают больше своего менеджера(прием SELF join)
+*/
+
+
+use hr;
+SELECT *
+FROM employees;
+
+SELECT
+t1.job_id, 
+t1.employee_id
+FROM employees t1
+INNER JOIN employees e2 ON t1.manager_id = e2.employee_id
+WHERE t1.salary > e2.salary;
+
+/*
+2.Вывести имя, фамилию и город сотрудников, которые работают в Seattle или Toronto (участвуют три таблицы)
+*/
+use hr;
+SELECT *
+FROM jobs;
+
+SELECT e.first_name, e.last_name, l.city
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+JOIN locations l ON d.location_id = l.location_id
+WHERE l.city IN ('Seattle', 'Toronto');
+
+/*
+3.Вывести имя, фамилию, название департамента и название должности сотрудника(участвуют три таблицы)
+departments
+
+*/
+
+SELECT *
+FROM jobs;
+
+SELECT e.first_name, e.last_name, d.department_name, j.job_title
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+JOIN jobs j ON e.job_id = j.job_id;
